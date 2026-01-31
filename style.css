@@ -1,109 +1,123 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@400;700&family=Monotype+Corsiva&display=swap'); /* Added Monotype Corsiva */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
 
 body {
-    margin: 0;
-    height: 100vh;
+    background-color: #fdf5e6;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to bottom right, #f2eadf, #e8d7c0); /* Softer, lighter golden background */
-    font-family: 'Playfair Display', serif;
-    overflow: hidden;
+    height: 100vh;
+    margin: 0;
 }
 
 .envelope-wrapper {
     position: relative;
-    width: 350px;
-    height: 250px;
-    perspective: 1000px; /* For 3D rotation */
     cursor: pointer;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4); /* More pronounced shadow */
-    border-radius: 10px;
 }
 
 .envelope {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Envelope open animation */
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background-color: #b30000; /* Royal Red */
+    border: 3px solid #d4af37; /* Royal Gold Border */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.envelope.open {
-    transform: rotateX(180deg); /* Opens the envelope */
-}
-
-.envelope-front-flap {
+/* Red Flap with Gold Border */
+.flap {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background: #c0392b; /* Red flap */
-    transform-origin: bottom;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-top: 100px solid #d4af37; /* Gold Outer */
     z-index: 3;
-    border-radius: 0 0 10px 10px;
-    backface-visibility: hidden; /* Hide when rotated */
+    transform-origin: top;
+    transition: transform 0.6s ease;
 }
 
-.envelope-body {
+.flap::after {
+    content: "";
+    position: absolute;
+    top: -100px;
+    left: -147px;
+    border-left: 147px solid transparent;
+    border-right: 147px solid transparent;
+    border-top: 97px solid #b30000; /* Red Inner */
+}
+
+/* Envelope Body */
+.body {
     position: absolute;
     bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #f1c40f; /* Golden envelope body */
+    width: 0;
+    height: 0;
+    border-left: 150px solid #b30000;
+    border-right: 150px solid #b30000;
+    border-bottom: 100px solid #800000;
     z-index: 2;
-    border-radius: 10px;
 }
 
-.heart-sticker {
+/* Heart Emoji Sticker */
+.heart-emoji {
     position: absolute;
-    top: 45%; /* Centered vertically on the flap */
+    top: 85px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 45px; /* Slightly larger heart */
-    height: 45px;
-    background: #e74c3c; /* Red heart */
-    clip-path: polygon(50% 0%, 100% 40%, 100% 100%, 50% 100%, 0% 100%, 0% 40%);
+    transform: translateX(-50%);
+    font-size: 40px;
     z-index: 4;
-    transition: transform 0.3s ease-in-out;
-}
-.envelope.open .heart-sticker {
-    transform: translate(-50%, -50%) scale(0); /* Hide heart on open */
+    transition: opacity 0.4s ease;
 }
 
-.open-me {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Dancing Script', cursive;
-    font-size: 2rem; /* Larger "Open Me!" */
-    color: #333;
-    z-index: 5;
-    pointer-events: none; /* So it doesn't block clicks on envelope */
-    transition: opacity 0.3s ease;
-}
-.envelope.open .open-me {
-    opacity: 0; /* Hide text on open */
-}
-
+/* The Letter Inside */
 .letter {
     position: absolute;
-    top: 50%; /* Starts inside the envelope */
-    left: 50%;
-    transform: translate(-50%, -50%) translateY(20px); /* Slightly lower inside */
-    width: 90%;
-    height: 90%;
-    background: #fdf5e6; /* Vintage paper color (cream/yellow-golden) */
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 1;
+    bottom: 10px;
+    left: 10px;
+    width: 280px;
+    height: 180px;
+    background: #fff8dc; /* Vintage Page Colour */
+    background-image: linear-gradient(#e5e5e5 1px, transparent 1px);
+    background-size: 100% 20px;
     border-radius: 5px;
-    transition: transform 1s 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s 0.5s;
-    opacity: 0; /* Hidden initially */
-    transform-style: preserve-3d; /* For page flip */
+    z-index: 1;
+    transition: transform 0.8s ease;
+}
+
+.page-content {
+    padding: 20px;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    color: #000;
+}
+
+.greeting { margin: 0; font-size: 1.5rem; }
+.message-text { font-size: 1rem; margin-top: 10px; line-height: 1.4; }
+.hidden { display: none; }
+
+/* Open State Animations */
+.envelope-wrapper.open .flap {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.envelope-wrapper.open .letter {
+    transform: translateY(-120px);
+    z-index: 5;
+}
+
+.envelope-wrapper.open .heart-emoji {
+    opacity: 0;
+}
+
+.instruction {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #b30000;
+    margin-top: 20px;
+    font-weight: bold;
+}
     transform-origin: top center; /* For page flip from top */
     display: flex;
     flex-direction: column;
