@@ -20,21 +20,20 @@ body {
 .envelope-wrapper {
     position: relative;
     cursor: pointer;
-    perspective: 1000px;
+    perspective: 1000px; /* 3D effect ke liye */
 }
 
-/* Royal Red Envelope */
 .envelope {
     position: relative;
     width: 320px;
     height: 220px;
     background-color: #b30000;
-    border: 3px solid #d4af37; /* Golden Border */
+    border: 3px solid #d4af37;
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     z-index: 10;
 }
 
-/* Flap opening from TOP */
+/* Flap transition ko super smooth banaya hai */
 .flap {
     position: absolute;
     top: 0;
@@ -45,7 +44,8 @@ body {
     border-top: 110px solid #d4af37;
     z-index: 30;
     transform-origin: top;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Smooth cubic-bezier transition */
+    transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .flap::after {
@@ -69,34 +69,34 @@ body {
     z-index: 20;
 }
 
-/* Hidden Letter Initial State */
+/* Letter ki sliding animation */
 .letter {
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     left: 50%;
     transform: translateX(-50%) translateY(0);
     width: 290px;
-    height: 190px;
-    background: #fff8dc; /* Vintage Yellow-Golden Mix */
-    background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
-    background-size: 100% 25px;
+    height: 210px;
+    background: #fff8dc;
     border-radius: 5px;
-    z-index: 1; /* Inside/Behind */
+    z-index: 1;
     padding: 15px;
     box-sizing: border-box;
     visibility: hidden;
     opacity: 0;
-    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+    /* Letter ke bahar nikalne ki smooth timing */
+    transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s;
 }
 
 .page-content {
     text-align: center;
     font-family: 'Dancing Script', cursive;
+    color: #000;
 }
 
-.hidden { display: none; }
+.greeting { font-size: 1.4rem; margin: 5px 0; color: #b30000; }
+.main-message { font-size: 1rem; line-height: 1.4; margin: 0; }
 
-/* Heart Sticker */
 .heart-emoji {
     position: absolute;
     top: 90px;
@@ -104,19 +104,19 @@ body {
     transform: translateX(-50%);
     font-size: 45px;
     z-index: 40;
-    transition: 0.5s;
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* --- Animations when Clicked --- */
+/* Jab Envelope khulega (Open State) */
 .envelope-wrapper.open .flap {
     transform: rotateX(180deg);
-    z-index: 5;
+    z-index: 5; /* Flap khulne ke baad peeche jaye */
 }
 
 .envelope-wrapper.open .letter {
     visibility: visible;
     opacity: 1;
-    transform: translateX(-50%) translateY(-160px);
+    transform: translateX(-50%) translateY(-175px); /* Smooth slide up */
     z-index: 50;
 }
 
@@ -125,11 +125,4 @@ body {
     transform: translateX(-50%) scale(0);
 }
 
-.instruction {
-    text-align: center;
-    color: #b30000;
-    margin-top: 25px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-}
+.instruction { color: #b30000; margin-top: 25px; font-weight: bold; font-size: 0.9rem; }
