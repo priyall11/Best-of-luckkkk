@@ -1,47 +1,33 @@
-const envelopeWrapper = document.querySelector('.envelope-wrapper');
-const envelope = document.querySelector('.envelope');
-const letter = document.querySelector('.letter');
-const page1 = document.querySelector('.page1'); // Select page1 for click
-const turnPagePrompt = document.querySelector('.turn-page-prompt');
+const envelope = document.getElementById('envelope');
+const page = document.getElementById('letter-page');
+const text1 = document.getElementById('text-page1');
+const text2 = document.getElementById('text-page2');
 
-// Function to open the envelope and trigger confetti
-envelopeWrapper.addEventListener('click', () => {
+envelope.addEventListener('click', () => {
+    // 1. Agar envelope band hai, toh pehle usey kholo
     if (!envelope.classList.contains('open')) {
         envelope.classList.add('open');
-        // Trigger confetti when envelope opens
-        fireConfetti();
         
-        // After envelope opens, make letter visible and slightly animate
-        setTimeout(() => {
-            letter.style.opacity = '1';
-            letter.style.transform = 'translate(-50%, -50%) translateY(-20px) rotateX(0deg)';
-        }, 800); // Slightly less than envelope transition for smoother flow
+        // Sunder Confetti burst jab envelope khule
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#b30000', '#d4af37', '#ffffff'] // Red, Gold, aur White colors
+        });
+    } 
+    // 2. Agar envelope pehle se khula hai, toh page turn logic chalao
+    else {
+        // Pehle page ka text hide karo aur doosre ka show karo
+        if (!text1.classList.contains('hidden')) {
+            text1.classList.add('hidden');
+            text2.classList.remove('hidden');
+            
+            // Halka sa Page Turn effect (vibe ke liye)
+            page.style.transform = "rotateY(10deg)";
+            setTimeout(() => {
+                page.style.transform = "rotateY(0deg)";
+            }, 300);
+        }
     }
 });
-
-// Function to flip the letter page (click on page1 or prompt)
-page1.addEventListener('click', (event) => {
-    // Check if the click was directly on the prompt or anywhere else on page1
-    if (event.target.classList.contains('turn-page-prompt') || event.target.classList.contains('page1')) {
-        letter.classList.add('flipped');
-    }
-});
-
-
-// Confetti function for celebratory effect
-function fireConfetti() {
-    var count = 200;
-    var defaults = { origin: { y: 0.7 } };
-
-    function fire(particleRatio, opts) {
-        confetti(Object.assign({}, defaults, opts, {
-            particleCount: Math.floor(count * particleRatio)
-        }));
-    }
-
-    fire(0.25, { spread: 26, startVelocity: 55 });
-    fire(0.2, { spread: 60 });
-    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    fire(0.1, { spread: 120, startVelocity: 45 });
-}
