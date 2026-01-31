@@ -1,25 +1,14 @@
-/* Google Fonts for Vintage and Cursive Vibe */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;700&display=swap');
 
 body {
     margin: 0;
-    padding: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Aesthetic Soft Background */
     background: #fdf5e6; 
     font-family: 'Inter', sans-serif;
     overflow: hidden;
-}
-
-.container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
 }
 
 .envelope-wrapper {
@@ -28,18 +17,16 @@ body {
     perspective: 1000px;
 }
 
-/* Royal Red Envelope with Golden Border */
 .envelope {
     position: relative;
     width: 320px;
     height: 220px;
-    background-color: #b30000; /* Royal Red */
-    border: 3px solid #d4af37; /* Royal Gold Border */
+    background-color: #b30000;
+    border: 3px solid #d4af37;
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     z-index: 10;
 }
 
-/* Red Flap with Gold Border - Opening upwards */
 .flap {
     position: absolute;
     top: 0;
@@ -47,7 +34,7 @@ body {
     height: 0;
     border-left: 160px solid transparent;
     border-right: 160px solid transparent;
-    border-top: 110px solid #d4af37; /* Gold Outer Border of Flap */
+    border-top: 110px solid #d4af37;
     z-index: 30;
     transform-origin: top;
     transition: transform 0.6s ease-in-out;
@@ -60,10 +47,9 @@ body {
     left: -157px;
     border-left: 157px solid transparent;
     border-right: 157px solid transparent;
-    border-top: 107px solid #b30000; /* Red Inner Part of Flap */
+    border-top: 107px solid #b30000;
 }
 
-/* Envelope Body Inner Design */
 .body {
     position: absolute;
     bottom: 0;
@@ -71,23 +57,20 @@ body {
     height: 0;
     border-left: 160px solid #b30000;
     border-right: 160px solid #b30000;
-    border-bottom: 110px solid #800000; /* Darker Red for Depth */
+    border-bottom: 110px solid #800000;
     z-index: 20;
 }
 
-/* Heart Emoji as Sticker */
 .heart-emoji {
     position: absolute;
-    top: 95px; /* Centered on the flap point */
+    top: 90px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 45px;
     z-index: 40;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+    transition: 0.4s;
 }
 
-/* Vintage Paper Letter Inside */
 .letter {
     position: absolute;
     bottom: 10px;
@@ -95,72 +78,31 @@ body {
     transform: translateX(-50%);
     width: 290px;
     height: 190px;
-    /* Vintage Paper: Light Yellow/Golden Mix */
-    background: #fff8dc; 
-    /* Lined Paper Effect */
+    background: #fff8dc;
     background-image: linear-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px);
     background-size: 100% 25px;
     border-radius: 5px;
     z-index: 5;
-    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: 1s;
     padding: 15px;
     box-sizing: border-box;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .page-content {
     text-align: center;
     font-family: 'Dancing Script', cursive;
-    color: #1a1a1a; /* Clean Black for readability */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
-.greeting {
-    margin: 0;
-    font-size: 1.8rem;
-    color: #b30000; /* Red highlight for name */
-}
+.hidden { display: none; }
 
-.message-text {
-    font-size: 1.1rem;
-    margin-top: 15px;
-    line-height: 1.5;
-}
-
-.hidden {
-    display: none;
-}
-
-/* --- Open State Animations --- */
-
-/* Flap khulna */
-.envelope-wrapper.open .flap {
-    transform: rotateX(180deg);
-    z-index: 0; /* Khulne ke baad peeche chala jaye */
-}
-
-/* Letter ka bahar aana */
-.envelope-wrapper.open .letter {
-    transform: translateX(-50%) translateY(-150px);
-    z-index: 50; /* Letter sabse upar dikhe */
-}
-
-/* Heart Sticker ka gayab hona */
-.envelope-wrapper.open .heart-emoji {
-    opacity: 0;
-    transform: translateX(-50%) scale(0);
-}
+/* Open State */
+.envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 0; }
+.envelope-wrapper.open .letter { transform: translateX(-50%) translateY(-150px); z-index: 50; }
+.envelope-wrapper.open .heart-emoji { opacity: 0; }
 
 .instruction {
     text-align: center;
-    font-family: 'Inter', sans-serif;
     color: #b30000;
-    margin-top: 30px;
+    margin-top: 20px;
     font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: 0.8rem;
 }
