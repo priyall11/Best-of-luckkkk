@@ -1,222 +1,166 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+/* Google Fonts for Vintage and Cursive Vibe */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;700&display=swap');
 
 body {
-    background-color: #fdf5e6;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    /* Aesthetic Soft Background */
+    background: #fdf5e6; 
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .envelope-wrapper {
     position: relative;
     cursor: pointer;
+    perspective: 1000px;
 }
 
+/* Royal Red Envelope with Golden Border */
 .envelope {
     position: relative;
-    width: 300px;
-    height: 200px;
+    width: 320px;
+    height: 220px;
     background-color: #b30000; /* Royal Red */
     border: 3px solid #d4af37; /* Royal Gold Border */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    z-index: 10;
 }
 
-/* Red Flap with Gold Border */
+/* Red Flap with Gold Border - Opening upwards */
 .flap {
     position: absolute;
     top: 0;
     width: 0;
     height: 0;
-    border-left: 150px solid transparent;
-    border-right: 150px solid transparent;
-    border-top: 100px solid #d4af37; /* Gold Outer */
-    z-index: 3;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 110px solid #d4af37; /* Gold Outer Border of Flap */
+    z-index: 30;
     transform-origin: top;
-    transition: transform 0.6s ease;
+    transition: transform 0.6s ease-in-out;
 }
 
 .flap::after {
     content: "";
     position: absolute;
-    top: -100px;
-    left: -147px;
-    border-left: 147px solid transparent;
-    border-right: 147px solid transparent;
-    border-top: 97px solid #b30000; /* Red Inner */
+    top: -110px;
+    left: -157px;
+    border-left: 157px solid transparent;
+    border-right: 157px solid transparent;
+    border-top: 107px solid #b30000; /* Red Inner Part of Flap */
 }
 
-/* Envelope Body */
+/* Envelope Body Inner Design */
 .body {
     position: absolute;
     bottom: 0;
     width: 0;
     height: 0;
-    border-left: 150px solid #b30000;
-    border-right: 150px solid #b30000;
-    border-bottom: 100px solid #800000;
-    z-index: 2;
+    border-left: 160px solid #b30000;
+    border-right: 160px solid #b30000;
+    border-bottom: 110px solid #800000; /* Darker Red for Depth */
+    z-index: 20;
 }
 
-/* Heart Emoji Sticker */
+/* Heart Emoji as Sticker */
 .heart-emoji {
     position: absolute;
-    top: 85px;
+    top: 95px; /* Centered on the flap point */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 40px;
-    z-index: 4;
-    transition: opacity 0.4s ease;
+    font-size: 45px;
+    z-index: 40;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
 }
 
-/* The Letter Inside */
+/* Vintage Paper Letter Inside */
 .letter {
     position: absolute;
     bottom: 10px;
-    left: 10px;
-    width: 280px;
-    height: 180px;
-    background: #fff8dc; /* Vintage Page Colour */
-    background-image: linear-gradient(#e5e5e5 1px, transparent 1px);
-    background-size: 100% 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 290px;
+    height: 190px;
+    /* Vintage Paper: Light Yellow/Golden Mix */
+    background: #fff8dc; 
+    /* Lined Paper Effect */
+    background-image: linear-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+    background-size: 100% 25px;
     border-radius: 5px;
-    z-index: 1;
-    transition: transform 0.8s ease;
+    z-index: 5;
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .page-content {
-    padding: 20px;
     text-align: center;
     font-family: 'Dancing Script', cursive;
-    color: #000;
+    color: #1a1a1a; /* Clean Black for readability */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.greeting { margin: 0; font-size: 1.5rem; }
-.message-text { font-size: 1rem; margin-top: 10px; line-height: 1.4; }
-.hidden { display: none; }
+.greeting {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #b30000; /* Red highlight for name */
+}
 
-/* Open State Animations */
+.message-text {
+    font-size: 1.1rem;
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+.hidden {
+    display: none;
+}
+
+/* --- Open State Animations --- */
+
+/* Flap khulna */
 .envelope-wrapper.open .flap {
     transform: rotateX(180deg);
-    z-index: 0;
+    z-index: 0; /* Khulne ke baad peeche chala jaye */
 }
 
+/* Letter ka bahar aana */
 .envelope-wrapper.open .letter {
-    transform: translateY(-120px);
-    z-index: 5;
+    transform: translateX(-50%) translateY(-150px);
+    z-index: 50; /* Letter sabse upar dikhe */
 }
 
+/* Heart Sticker ka gayab hona */
 .envelope-wrapper.open .heart-emoji {
     opacity: 0;
+    transform: translateX(-50%) scale(0);
 }
 
 .instruction {
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     color: #b30000;
-    margin-top: 20px;
+    margin-top: 30px;
     font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
 }
-    transform-origin: top center; /* For page flip from top */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.envelope.open .letter {
-    transform: translate(-50%, -50%) translateY(-20px) rotateX(0deg); /* Comes out and stands upright */
-    opacity: 1;
-}
-
-.page {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Adjusted for better content distribution */
-    align-items: center;
-    text-align: center;
-    color: #333; /* Black font */
-    line-height: 1.6;
-    background: #fdf5e6; /* Vintage paper color */
-    border-radius: 5px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.05); /* Soft inner shadow for depth */
-    /* Page lines for vintage feel */
-    background-image: linear-gradient(#ccc 1px, transparent 1px);
-    background-size: 100% 25px; /* Line spacing */
-    background-position: 0 10px; /* Start lines a bit down */
-}
-
-.page1 {
-    z-index: 2; /* Page 1 is on top */
-    transform: rotateY(0deg);
-    font-family: 'Dancing Script', cursive; /* Cursive font */
-    font-size: 1.2rem;
-    transition: transform 0.8s; /* Smooth page flip */
-    cursor: pointer; /* Indicate it's clickable */
-}
-
-.page2 {
-    z-index: 1; /* Page 2 is behind */
-    transform: rotateY(180deg); /* Starts flipped */
-    font-family: 'Dancing Script', cursive; /* Cursive font */
-    font-size: 1.2rem;
-    transition: transform 0.8s; /* Smooth page flip */
-}
-
-.letter.flipped .page1 {
-    transform: rotateY(-180deg); /* Flips page 1 */
-}
-.letter.flipped .page2 {
-    transform: rotateY(0deg); /* Shows page 2 */
-}
-
-.greeting {
-    font-family: "Monotype Corsiva", "Apple Chancery", cursive; /* Monotype Corsiva font */
-    font-size: 2.2rem;
-    color: #4a148c; /* Darker, rich color for greeting */
-    margin-bottom: 10px;
-}
-
-.intro-message {
-    font-size: 1rem;
-    color: #555;
-    margin-top: 10px;
-}
-
-.turn-page-prompt {
-    font-size: 0.9rem;
-    color: #007bff;
-    text-decoration: underline;
-    cursor: pointer;
-    margin-top: auto; /* Pushes to bottom */
-    padding-bottom: 10px; /* Space from bottom */
-}
-.turn-page-prompt:hover {
-    color: #0056b3;
-}
-
-.main-wish {
-    font-size: 1.1rem;
-    font-family: 'Dancing Script', cursive; /* Cursive font */
-    color: #222; /* Darker black for text */
-    text-align: center;
-    margin-top: 20px; /* Space from top */
-    margin-bottom: auto; /* Pushes signature to bottom */
-}
-
-.signature {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.3rem;
-    color: #888;
-    margin-top: 20px;
-}
-
