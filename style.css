@@ -9,18 +9,44 @@ body {
     background: #fdf5e6; 
     font-family: 'Inter', sans-serif;
     overflow: hidden;
+    position: relative;
+}
+
+/* Falling Hearts Container */
+.heart-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Chote Falling Hearts ki Style */
+.falling-heart {
+    position: absolute;
+    font-size: 6px; /* 5-6px size as requested */
+    user-select: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 10;
 }
 
 .envelope-wrapper {
     position: relative;
     cursor: pointer;
-    perspective: 1000px; /* 3D effect ke liye */
+    perspective: 1000px;
 }
 
 .envelope {
@@ -33,7 +59,6 @@ body {
     z-index: 10;
 }
 
-/* Flap transition ko super smooth banaya hai */
 .flap {
     position: absolute;
     top: 0;
@@ -44,7 +69,6 @@ body {
     border-top: 110px solid #d4af37;
     z-index: 30;
     transform-origin: top;
-    /* Smooth cubic-bezier transition */
     transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -69,7 +93,6 @@ body {
     z-index: 20;
 }
 
-/* Letter ki sliding animation */
 .letter {
     position: absolute;
     bottom: 5px;
@@ -84,7 +107,6 @@ body {
     box-sizing: border-box;
     visibility: hidden;
     opacity: 0;
-    /* Letter ke bahar nikalne ki smooth timing */
     transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.8s;
 }
 
@@ -104,25 +126,15 @@ body {
     transform: translateX(-50%);
     font-size: 45px;
     z-index: 40;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: 0.5s;
 }
 
-/* Jab Envelope khulega (Open State) */
-.envelope-wrapper.open .flap {
-    transform: rotateX(180deg);
-    z-index: 5; /* Flap khulne ke baad peeche jaye */
+.envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 5; }
+.envelope-wrapper.open .letter { 
+    visibility: visible; 
+    opacity: 1; 
+    transform: translateX(-50%) translateY(-175px); 
+    z-index: 50; 
 }
-
-.envelope-wrapper.open .letter {
-    visibility: visible;
-    opacity: 1;
-    transform: translateX(-50%) translateY(-175px); /* Smooth slide up */
-    z-index: 50;
-}
-
-.envelope-wrapper.open .heart-emoji {
-    opacity: 0;
-    transform: translateX(-50%) scale(0);
-}
-
+.envelope-wrapper.open .heart-emoji { opacity: 0; transform: translateX(-50%) scale(0); }
 .instruction { color: #b30000; margin-top: 25px; font-weight: bold; font-size: 0.9rem; }
